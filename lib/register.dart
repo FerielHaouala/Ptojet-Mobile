@@ -1,14 +1,18 @@
 import 'package:flutter/material.dart';
 
+import 'auth.dart';
+
 class RegisterPage extends StatefulWidget {
-  const RegisterPage({Key? key}) : super(key: key);
+  const RegisterPage({Key key}) : super(key: key);
 
   @override
   State<RegisterPage> createState() => _RegisterPageState();
 }
 
 class _RegisterPageState extends State<RegisterPage> with SingleTickerProviderStateMixin {
-  late AnimationController _controller;
+   AnimationController _controller;
+
+
 
   @override
   void initState() {
@@ -24,6 +28,8 @@ class _RegisterPageState extends State<RegisterPage> with SingleTickerProviderSt
 
   @override
   Widget build(BuildContext context) {
+    var emailController = TextEditingController();
+    var passwordContoller = TextEditingController();
     return Container(
       decoration: BoxDecoration(
         image: DecorationImage(
@@ -57,30 +63,7 @@ class _RegisterPageState extends State<RegisterPage> with SingleTickerProviderSt
                       child: Column(
                         children: [
                           TextField(
-                            style: TextStyle(color: Colors.white),
-                            decoration: InputDecoration(
-                                enabledBorder: OutlineInputBorder(
-                                  borderRadius: BorderRadius.circular(10),
-                                  borderSide: BorderSide(
-                                    color: Colors.white,
-                                  ),
-                                ),
-                                focusedBorder: OutlineInputBorder(
-                                  borderRadius: BorderRadius.circular(10),
-                                  borderSide: BorderSide(
-                                    color: Colors.black,
-                                  ),
-                                ),
-                                hintText: "Name",
-                                hintStyle: TextStyle(color: Colors.white),
-                                border: OutlineInputBorder(
-                                  borderRadius: BorderRadius.circular(10),
-                                )),
-                          ),
-                          SizedBox(
-                            height: 30,
-                          ),
-                          TextField(
+                            controller:emailController,
                             style: TextStyle(color: Colors.white),
                             decoration: InputDecoration(
                                 enabledBorder: OutlineInputBorder(
@@ -105,6 +88,7 @@ class _RegisterPageState extends State<RegisterPage> with SingleTickerProviderSt
                             height: 30,
                           ),
                           TextField(
+                            controller: passwordContoller,
                             style: TextStyle(color: Colors.white),
                             obscureText: true,
                             decoration: InputDecoration(
@@ -132,12 +116,29 @@ class _RegisterPageState extends State<RegisterPage> with SingleTickerProviderSt
                           Row(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
-                              Text(
-                                'Sign Up',
-                                style: TextStyle(
-                                    color: Colors.white,
-                                    fontSize: 27,
-                                    fontWeight: FontWeight.w700),
+                              Container(
+                                child: Material(
+                                  borderRadius: BorderRadius.circular((20.0)),
+                                  shadowColor: Color(0xff4c505b),
+                                  color: Color(0xff4c505b),
+                                  elevation: 7.0,
+                                  child :GestureDetector(
+                                    onTap: () {
+                                      AuthController.instance.register(emailController.text.trim(),passwordContoller.text.trim());
+                                    },
+                                    child: Center(
+                                      child: Text(
+                                        'Sign Up',
+                                        style: TextStyle(
+                                            color: Colors.white,
+                                            fontSize: 20,
+                                            fontWeight: FontWeight.w700),
+                                      ),
+                                    ),
+                                  )
+
+                                ),
+
                               ),
                               CircleAvatar(
                                 radius: 30,

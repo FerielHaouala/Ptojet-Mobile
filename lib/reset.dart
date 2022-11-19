@@ -1,17 +1,20 @@
-import 'package:flutter/cupertino.dart';
-import 'package:flutter/material.dart';
-import 'package:voice_app/reset.dart';
-import 'auth.dart';
 
-class LoginPage extends StatefulWidget {
-  const LoginPage({Key key}) : super(key: key);
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_core/firebase_core.dart';
+import 'package:flutter/material.dart';
+
+
+class ResetPage extends StatefulWidget {
 
   @override
-  State<LoginPage> createState() => _LoginPageState();
+  State<ResetPage> createState() => _ResetPageState();
 }
 
-class _LoginPageState extends State<LoginPage> with SingleTickerProviderStateMixin {
+class _ResetPageState extends State<ResetPage> with SingleTickerProviderStateMixin {
    AnimationController _controller;
+   final _emailController =TextEditingController();
+   final auth =FirebaseAuth.instance;
+
 
 
 
@@ -27,10 +30,9 @@ class _LoginPageState extends State<LoginPage> with SingleTickerProviderStateMix
     super.dispose();
   }
 
+
   @override
   Widget build(BuildContext context) {
-    var emailController = TextEditingController();
-    var passwordContoller = TextEditingController();
     return Container(
           decoration: BoxDecoration(
               image: DecorationImage(image: AssetImage('img/login.png'), fit: BoxFit.cover)),
@@ -40,7 +42,7 @@ class _LoginPageState extends State<LoginPage> with SingleTickerProviderStateMix
               children: [
                 Container(
                   padding: EdgeInsets.only(left:35, top: 150),
-                  child: Text('Welcome\nBack', style: TextStyle(
+                  child: Text('Reset\nyour password', style: TextStyle(
                     color: Colors.white, fontSize: 33
                   ),),
                 ),
@@ -50,7 +52,7 @@ class _LoginPageState extends State<LoginPage> with SingleTickerProviderStateMix
                     child: Column(
                       children: [
                         TextField(
-                          controller: emailController,
+                          controller: _emailController,
                           decoration: InputDecoration(
                             fillColor: Colors.grey.shade100,
                             filled: true,
@@ -63,21 +65,8 @@ class _LoginPageState extends State<LoginPage> with SingleTickerProviderStateMix
                         SizedBox(
                           height: 30,
                         ),
-                        TextField(
-                          controller: passwordContoller,
-                          obscureText: true,
-                          decoration: InputDecoration(
-                            fillColor: Colors.grey.shade100,
-                            filled: true,
-                            hintText: 'Password',
-                            border: OutlineInputBorder(
-                                borderRadius: BorderRadius.circular(10)
-                            ),
-                          ),
-                        ),
-                        SizedBox(
-                          height: 40,
-                        ),
+
+
                         Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
@@ -90,14 +79,20 @@ class _LoginPageState extends State<LoginPage> with SingleTickerProviderStateMix
                             elevation: 7.0,
                             child :GestureDetector(
                                onTap: () {
-                                  AuthController.instance.login(emailController.text.trim(),passwordContoller.text.trim());
+                                 auth.sendPasswordResetEmail(email: _emailController.text.toString()).then((value){
+                                   Utils().toastMessage('We have sent you an email to recover password, please check your emain');
+                                 }).onError((error, stackTrace) {
+                                   Utils().toastMessage(error.toString());
+                                 })
+                                 ;
+
     },
                               child: Center(
                               child:Text(
-                            'Sign In',
+                            'Send request',
                             style: TextStyle(
                                 color: Colors.white,
-                                fontSize: 27,
+                                fontSize: 20,
                                 fontWeight: FontWeight.w700),
                           ),),),),),
                             CircleAvatar(
@@ -106,39 +101,14 @@ class _LoginPageState extends State<LoginPage> with SingleTickerProviderStateMix
                               child: IconButton(
                                   color: Colors.white,
                                   onPressed: () {
-                                    Navigator.pushNamed(context, 'register');
+                                    Navigator.pushNamed(context, 'login');
                                   },
                                   icon: Icon(Icons.arrow_forward)
                             ),)
                           ],
                         ),
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            TextButton(
-                                onPressed: () {
-                                  Navigator.pushNamed(context, 'register');
-                                },
-                                child: Text(
-                                  'Sign up',
-                                  style: TextStyle(
-                                    decoration: TextDecoration.underline,
-                                    fontSize: 18,
-                                    color: Color(0xff4c505b)
-                                  ),
-                                )),
-                            TextButton(
-                                onPressed: () => Navigator.of(context).push(MaterialPageRoute(builder: (context)=> ResetPage())),
-                                child: Text(
-                                  'Forgot Password',
-                                  style: TextStyle(
-                                      decoration: TextDecoration.underline,
-                                      fontSize: 18,
-                                      color: Color(0xff4c505b)
-                                  ),
-                                ))
-                          ],
-                        )
+
+
                       ],
                     ),
                   ),
@@ -148,4 +118,8 @@ class _LoginPageState extends State<LoginPage> with SingleTickerProviderStateMix
           )
           );
   }
+}
+
+class Utils {
+  void toastMessage(String s) {}
 }
