@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:get/get.dart';
 import 'login_page.dart';
-import 'reset.dart';
+
 class AuthController extends GetxController {
   static AuthController instance = Get.find();
   Rx<User> _user;
@@ -22,7 +22,8 @@ class AuthController extends GetxController {
       print("login page");
       Get.offAll(() => LoginPage());
     }
-  }
+    }
+
 
   void register(String email, password) async {
     try {

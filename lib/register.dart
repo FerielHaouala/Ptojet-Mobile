@@ -54,7 +54,7 @@ class _RegisterPageState extends State<RegisterPage> with SingleTickerProviderSt
             SingleChildScrollView(
               child: Container(
                 padding: EdgeInsets.only(
-                    top: MediaQuery.of(context).size.height * 0.28),
+                    top: MediaQuery.of(context).size.height * 0.4),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
@@ -117,6 +117,8 @@ class _RegisterPageState extends State<RegisterPage> with SingleTickerProviderSt
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
                               Container(
+                                height: 60,
+                                width: 100,
                                 child: Material(
                                   borderRadius: BorderRadius.circular((20.0)),
                                   shadowColor: Color(0xff4c505b),

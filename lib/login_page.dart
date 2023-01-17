@@ -83,13 +83,15 @@ class _LoginPageState extends State<LoginPage> with SingleTickerProviderStateMix
                           children: [
 
                            Container(
+                             height: 60,
+                             width: 100,
                             child: Material(
                             borderRadius: BorderRadius.circular((20.0)),
                             shadowColor: Color(0xff4c505b),
                             color: Color(0xff4c505b),
                             elevation: 7.0,
                             child :GestureDetector(
-                               onTap: () {
+                               onTap: () async {
                                   AuthController.instance.login(emailController.text.trim(),passwordContoller.text.trim());
     },
                               child: Center(
@@ -97,7 +99,7 @@ class _LoginPageState extends State<LoginPage> with SingleTickerProviderStateMix
                             'Sign In',
                             style: TextStyle(
                                 color: Colors.white,
-                                fontSize: 27,
+                                fontSize: 20,
                                 fontWeight: FontWeight.w700),
                           ),),),),),
                             CircleAvatar(
