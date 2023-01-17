@@ -30,17 +30,17 @@ class _ResetPageState extends State<ResetPage> with SingleTickerProviderStateMix
         body: Container(
           decoration: BoxDecoration(
               image: DecorationImage(
-                  image: AssetImage('img/login.png'), fit: BoxFit.cover)),
+        image: AssetImage('img/login.png'), fit: BoxFit.cover),),
           child: Stack(children: [
           Container(
-          padding: EdgeInsets.only(left: 35, top: 150),
-          child: Text('Reset\nyour password',
-              style: TextStyle(color: Colors.white, fontSize: 33)),
+            padding: EdgeInsets.only(left: 50, top:300),
+            child: Text('Reset\nyour\npassword',
+              style: TextStyle(color: Colors.black, fontSize: 50)),
         ),
         SingleChildScrollView(
             child: Container(
             padding: EdgeInsets.only(
-            top: MediaQuery.of(context).size.height * 0.5,
+            top: MediaQuery.of(context).size.height * 0.7,
         right: 35,
         left: 35),
     child: Column(children: [
